@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Recarga de Saldo</title>
+</head>
+
+<body>
+    <div class="recarga-container">
+        <div class="recarga-navegacao-topo">
+            <a href="{{ url_for('inicio') }}" class="perfil-button perfil-button-voltar">
+                <span class="icone-botao">&larr;</span> Voltar
+            </a>
+        </div>
+
+        <h1>Recarga de Saldo</h1>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('recarga') }}" method="POST" class="recarga-form">
+            <div class="form-group">
+                <label for="valor" class="form-label">Valor (R$):</label>
+                <input type="text" id="valor" name="valor" class="form-input" placeholder="Ex: 10.50" required
+                    pattern="^\d+(\.\d{1,2})?$" title="Use o formato 0.00 ou 0">
+            </div>
+
+            <div class="form-group">
+                <label for="descricao" class="form-label">Descrição (opcional):</label>
+                <input type="text" id="descricao" name="descricao" class="form-input"
+                    placeholder="Ex: Recarga para lanches">
+            </div>
+
+            <button type="submit" class="button button-primary button-full-width">Gerar Pagamento</button>
+        </form>
+
+        {% if payment_link or qr_code_base64 %}
+        <div class="payment-link-section flash-message info">
+            <p>Seu pagamento Pix foi gerado!</p>
+            <p>Escaneie o QR Code abaixo ou clique em "Pagar Agora":</p>
+
+            {% if qr_code_base64 %}
+            <img src="data:image/png;base64,{{ qr_code_base64 }}" alt="QR Code Pix"
+                style="max-width: 300px; margin: 20px auto; display: block;">
+            {% endif %}
+
+            {% if payment_link %}
+            <p><a href="{{ payment_link }}" target="_blank" class="payment-gateway-link">Pagar Agora</a></p>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>

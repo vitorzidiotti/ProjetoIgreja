@@ -1,0 +1,1022 @@
+/* ===== ESTILOS GLOBAIS PARA O CORPO DA PÁGINA E LAYOUT BASE ===== */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: var(--light-bg);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+/* ===== DEFINIÇÕES DE VARIÁVEIS GLOBAIS (CSS CUSTOM PROPERTIES) ===== */
+:root {
+    --primary-color: #28a745;
+    --primary-dark: #218838;
+    --text-color: #333;
+    --light-bg: #f4f4f4;
+    --white-bg: #fff;
+    --border-color: #ddd;
+    --error-color: #dc3545;
+    --error-dark: #c82333;
+    --error-text-color: #721c24;
+    --error-bg: #f8d7da;
+    --success-color: #155724;
+    --success-bg: #d4edda;
+    --info-color: #004085;
+    --info-bg: #cce5ff;
+    --warning-text-color: #856404;
+    --warning-bg: #fff3cd;
+}
+
+/* ===== ESTILOS DO PAINEL DE ADMINISTRAÇÃO (GERAL) ===== */
+.admin-container h1 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 35px;
+    font-size: 2.3em;
+    font-weight: 600;
+}
+.admin-logout-link {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    text-decoration: none;
+    z-index: 1000;
+}
+.admin-logout-btn {
+    background-color: var(--error-color);
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.admin-logout-btn:hover {
+    background-color: var(--error-dark);
+    transform: translateY(-2px);
+}
+.admin-button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 30px;
+    align-items: center;
+}
+.admin-button-group a {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+    min-width: 240px;
+    text-align: center;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.admin-button-group a:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+@media (min-width: 600px) {
+    .admin-button-group {
+        flex-direction: row;
+        justify-content: center;
+        gap: 25px;
+    }
+}
+
+/* ===== ESTILOS PARA PÁGINA DE CADASTRO DE USUÁRIO ===== */
+.cadastro-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 30px 40px;
+    background-color: var(--white-bg);
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+.cadastro-container h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+.cadastro-form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.cadastro-form-group {
+    margin-bottom: 18px;
+}
+.cadastro-label {
+    font-weight: bold;
+    color: var(--text-color);
+    font-size: 0.95em;
+    margin-bottom: 8px;
+    text-align: left;
+    display: block;
+}
+.cadastro-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.cadastro-input::placeholder {
+    color: #aaa;
+}
+.cadastro-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+}
+.cadastro-button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 15px;
+    width: 100%;
+}
+.cadastro-button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+.flash-message {
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.95em;
+    border: 1px solid transparent;
+}
+.flash-message.success {
+    background-color: var(--success-bg);
+    color: var(--success-color);
+    border-color: #a3e0b1;
+}
+.flash-message.error {
+    background-color: var(--error-bg);
+    color: var(--error-text-color);
+    border-color: #f5c6cb;
+}
+.flash-message.info {
+    background-color: var(--info-bg);
+    color: var(--info-color);
+    border-color: #b8daff;
+}
+.flash-message.warning {
+    background-color: var(--warning-bg);
+    color: var(--warning-text-color);
+    border-color: #ffeeba;
+}
+
+/* ===== ESTILOS PARA PÁGINA DE LOGIN ===== */
+.login-container {
+    width: 100%;
+    max-width: 450px;
+    margin: 60px auto;
+    padding: 30px 40px;
+    background-color: var(--white-bg);
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+.login-container h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.login-form-group {
+    margin-bottom: 18px;
+}
+.login-label {
+    font-weight: bold;
+    color: var(--text-color);
+    font-size: 0.95em;
+    margin-bottom: 8px;
+    text-align: left;
+    display: block;
+}
+.login-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.login-input::placeholder {
+    color: #aaa;
+}
+.login-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+}
+.login-button-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.login-button {
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, opacity 0.3s ease, transform 0.2s ease;
+    width: 100%;
+}
+.login-button-submit {
+    background-color: var(--primary-color);
+}
+.login-button-submit:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+.login-button-register {
+    background-color: #7d726c;
+}
+.login-button-register:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+}
+.form-message {
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.95em;
+    border: 1px solid transparent;
+}
+.form-message.success {
+    background-color: var(--success-bg);
+    color: var(--success-color);
+    border-color: #a3e0b1;
+}
+.form-message.error {
+    background-color: var(--error-bg);
+    color: var(--error-text-color);
+    border-color: #f5c6cb;
+}
+.form-message.info {
+    background-color: var(--info-bg);
+    color: var(--info-color);
+    border-color: #b8daff;
+}
+.form-message.warning {
+    background-color: var(--warning-bg);
+    color: var(--warning-text-color);
+    border-color: #ffeeba;
+}
+.logout-link {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    text-decoration: none;
+    z-index: 1000;
+}
+.logout-btn {
+    background-color: var(--error-color);
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.logout-btn:hover {
+    background-color: var(--error-dark);
+    transform: translateY(-2px);
+}
+
+/* ===== ESTILOS PARA PÁGINA DE INÍCIO (HOME) ===== */
+.inicio-container {
+    width: 100%;
+    max-width: 750px;
+    margin: 80px auto 40px auto;
+    padding: 35px 45px;
+    background-color: var(--white-bg);
+    border-radius: 12px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    text-align: center;
+}
+.inicio-container h1 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 35px;
+    font-size: 2.3em;
+    font-weight: 600;
+}
+.inicio-button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 30px;
+    align-items: center;
+}
+.inicio-button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+    min-width: 240px;
+    text-align: center;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.inicio-button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+@media (min-width: 600px) {
+    .inicio-button-group {
+        flex-direction: row;
+        justify-content: center;
+        gap: 25px;
+    }
+    .inicio-button {}
+}
+
+/* ===== ESTILOS PARA PÁGINA DE CONSULTA DE ALUNOS (Admin) ===== */
+.admin-container {
+    max-width: 900px;
+    margin: 80px auto 40px auto;
+    padding: 30px 40px;
+    background-color: var(--white-bg);
+    border-radius: 12px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+.admin-container h1 {
+    color: var(--primary-color);
+    margin-top: 20px;
+    margin-bottom: 30px;
+    font-size: 2.2em;
+    font-weight: 600;
+    text-align: center;
+}
+.admin-nav-button {
+    display: inline-block;
+    background-color: #6c757d;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-bottom: 25px;
+}
+.admin-nav-button:hover {
+    background-color: #545b62;
+    transform: translateY(-2px);
+}
+.table-responsive-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 25px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95em;
+}
+thead tr {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: left;
+    font-weight: bold;
+}
+th, td {
+    padding: 14px 18px;
+    border: 1px solid var(--border-color);
+    text-align: left;
+    vertical-align: middle;
+}
+tbody tr {
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.2s ease;
+}
+tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+tbody tr:last-of-type {
+    border-bottom: 2px solid var(--primary-dark);
+}
+tbody tr:hover {
+    background-color: #e9ecef;
+}
+.nenhum-aluno-mensagem {
+    text-align: center;
+    font-size: 1.1em;
+    color: var(--text-color);
+    margin-top: 40px;
+    padding: 25px;
+    background-color: #f8f9fa;
+    border: 1px dashed var(--border-color);
+    border-radius: 8px;
+}
+@media screen and (max-width: 760px) {
+    table {
+        border: 0;
+    }
+    table thead {
+        display: none;
+    }
+    table tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    table td {
+        display: block;
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        border: none;
+        border-bottom: 1px dotted #eee;
+    }
+    table td:last-child {
+        border-bottom: 0;
+    }
+    table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        padding-right: 10px;
+        font-weight: bold;
+        text-align: left;
+        white-space: nowrap;
+    }
+}
+
+/* ===== ESTILOS PARA PÁGINA DE VISUALIZAÇÃO DE PERFIL ===== */
+.perfil-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 60px auto 40px auto;
+    padding: 30px 40px;
+    background-color: var(--white-bg);
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+.perfil-navegacao-topo {
+    text-align: center;
+    margin-bottom: 25px;
+}
+.perfil-container h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 30px;
+    font-size: 2.1em;
+    font-weight: 600;
+}
+.perfil-dados-card {
+    margin-top: 25px;
+    margin-bottom: 35px;
+    padding: 25px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    text-align: left;
+}
+.perfil-dado-item {
+    font-size: 1.05em;
+    color: var(--text-color);
+    margin-bottom: 15px;
+    line-height: 1.7;
+    display: flex;
+    flex-wrap: wrap;
+}
+.perfil-dado-item:last-child {
+    margin-bottom: 0;
+}
+.perfil-dado-item strong {
+    color: var(--primary-dark);
+    display: inline-block;
+    min-width: 70px;
+    margin-right: 8px;
+    font-weight: 600;
+}
+.perfil-dado-saldo {
+    font-size: 1.15em;
+    font-weight: 500;
+}
+.perfil-dado-saldo strong {
+    color: var(--primary-color);
+}
+.perfil-dado-saldo .perfil-dado-valor {
+    font-weight: bold;
+    color: var(--primary-dark);
+}
+.perfil-button {
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1em;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+    border: none;
+}
+.perfil-button-voltar {
+    background-color: var(--error-color);
+    color: white;
+}
+.perfil-button-voltar:hover {
+    background-color: var(--error-dark);
+    transform: translateY(-2px);
+}
+
+/* ===== ESTILOS PARA PÁGINA DE EDIÇÃO DE PERFIL ===== */
+.perfil-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 60px auto 40px auto;
+    padding: 30px 40px;
+    background-color: var(--white-bg);
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+.perfil-navegacao-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.perfil-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1em;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+    border: none;
+}
+.perfil-button .icone-botao {
+    font-size: 1.1em;
+}
+.perfil-button-voltar {
+    background-color: var(--error-color);
+    color: white;
+}
+.perfil-button-voltar:hover {
+    background-color: var(--error-dark);
+    transform: translateY(-2px);
+}
+.perfil-button-editar {
+    background-color: var(--primary-color);
+    color: white;
+}
+.perfil-button-editar:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+.perfil-container h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 30px;
+    font-size: 2.1em;
+    font-weight: 600;
+}
+.editar-form {
+    display: flex;
+    flex-direction: column;
+}
+.form-group {
+    margin-bottom: 22px;
+}
+.form-label {
+    display: block;
+    font-weight: bold;
+    color: var(--text-color);
+    font-size: 0.95em;
+    margin-bottom: 8px;
+    text-align: left;
+}
+.form-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.form-input::placeholder {
+    color: #aaa;
+}
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+}
+.form-input[readonly][disabled] {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+.form-group small {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.85em;
+    color: #6c757d;
+}
+.button.button-primary.button-full-width {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+.button.button-primary.button-full-width:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+.logout-link {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    text-decoration: none;
+    z-index: 1000;
+}
+.logout-btn {
+    background-color: var(--error-color);
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.logout-btn:hover {
+    background-color: var(--error-dark);
+    transform: translateY(-2px);
+}
+
+/* ===== ESTILOS PARA PÁGINA DE RECARGA DE SALDO ===== */
+.recarga-container {
+    width: 100%;
+    max-width: 550px;
+    margin: 80px auto 40px auto;
+    padding: 30px 40px;
+    background-color: var(--white-bg);
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+.recarga-container h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 30px;
+    font-size: 2.1em;
+    font-weight: 600;
+}
+.recarga-form {
+    display: flex;
+    flex-direction: column;
+}
+.form-group {
+    margin-bottom: 22px;
+}
+.form-label {
+    display: block;
+    font-weight: bold;
+    color: var(--text-color);
+    font-size: 0.95em;
+    margin-bottom: 8px;
+    text-align: left;
+}
+.form-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.form-input::placeholder {
+    color: #aaa;
+}
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+}
+.button.button-primary.button-full-width {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+.button.button-primary.button-full-width:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+.payment-link-section {
+    margin-top: 30px;
+    padding: 20px;
+}
+.payment-link-section p {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+.payment-link-section p:last-child {
+    margin-bottom: 0;
+}
+.payment-gateway-link {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 12px 25px;
+    background-color: var(--primary-color);
+    color: white !important;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 1.05em;
+}
+.payment-gateway-link:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+.flash-message {
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.95em;
+    border: 1px solid transparent;
+}
+.flash-message.success {
+    background-color: var(--success-bg);
+    color: var(--success-color);
+    border-color: #a3e0b1;
+}
+.flash-message.error {
+    background-color: var(--error-bg);
+    color: var(--error-text-color);
+    border-color: #f5c6cb;
+}
+.flash-message.info {
+    background-color: var(--info-bg);
+    color: var(--info-color);
+    border-color: #b8daff;
+}
+.flash-message.warning {
+    background-color: var(--warning-bg);
+    color: var(--warning-text-color);
+    border-color: #ffeeba;
+}
+
+/* ===== ESTILOS PARA PÁGINA DE DEBITAR SALDO DE ALUNO (Admin) ===== */
+.admin-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 60px auto 40px auto;
+    padding: 30px 40px;
+    background-color: var(--white-bg);
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+.debitar-saldo-container {
+    max-width: 700px;
+}
+.admin-container h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 30px;
+    font-size: 2.1em;
+    font-weight: 600;
+}
+.admin-navegacao-topo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 25px;
+}
+.admin-nav-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: red;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95em;
+    transition: transform 0.2s ease;
+}
+.admin-nav-button:hover {
+    transform: translateY(-2px);
+}
+.admin-nav-button .icone-botao {
+    font-size: 1.1em;
+}
+.admin-form {
+    margin-bottom: 30px;
+}
+.admin-form:last-child {
+    margin-bottom: 0;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+.form-label {
+    display: block;
+    font-weight: bold;
+    color: var(--text-color);
+    font-size: 0.95em;
+    margin-bottom: 8px;
+    text-align: left;
+}
+.form-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.form-input::placeholder {
+    color: #aaa;
+}
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+}
+.button.button-primary {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.05em;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-sizing: border-box;
+}
+.button.button-primary:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+.admin-form .button.button-primary {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+}
+.form-debitar .button.button-primary {
+    background-color: var(--error-color);
+}
+.form-debitar .button.button-primary:hover {
+    background-color: var(--error-dark);
+}
+.aluno-info-card {
+    margin-top: 30px;
+    padding: 25px;
+    background-color: var(--aluno-info-bg);
+    border: 1px solid var(--primary-color);
+    border-radius: 8px;
+    text-align: left;
+}
+.aluno-info-card h2 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.6em;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+.aluno-info-card p {
+    margin: 12px 0;
+    font-size: 1.05em;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+.aluno-info-card p strong {
+    font-weight: 600;
+    min-width: 120px;
+    display: inline-block;
+    color: #555;
+}
+.aluno-info-card .saldo-valor {
+    font-weight: bold;
+    color: var(--primary-dark);
+    font-size: 1.1em;
+}
+.flash-message {
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.95em;
+    border: 1px solid transparent;
+}
+.flash-message.success {
+    background-color: var(--success-bg);
+    color: var(--success-color);
+    border-color: #a3e0b1;
+}
+.flash-message.error {
+    background-color: var(--error-bg);
+    color: var(--error-text-color);
+    border-color: #f5c6cb;
+}
+.flash-message.info {
+    background-color: var(--info-bg);
+    color: var(--info-color);
+    border-color: #b8daff;
+}
+.flash-message.warning {
+    background-color: var(--warning-bg);
+    color: var(--warning-text-color);
+    border-color: #ffeeba;
+}

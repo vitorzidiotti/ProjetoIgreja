@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Início</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --success-color: #50E3C2;
+            --danger-color: #E74C3C;
+            --text-color: #333;
+            --light-text-color: #777;
+            --bg-color: #f8f9fa;
+            --card-bg-color: #ffffff;
+            --border-color: #e9ecef;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            /* CORREÇÃO: Alinha o conteúdo ao topo da página */
+            align-items: flex-start;
+            min-height: 100vh;
+            padding-top: 5vh; /* Adiciona um espaço no topo */
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .header-nav {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .button-sair {
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #fff;
+            background-color: var(--danger-color);
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button-sair:hover { background-color: #c0392b; }
+
+        .welcome-header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-header p {
+            font-size: 1.2rem;
+            color: var(--light-text-color);
+            margin-bottom: 3rem;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .action-card {
+            background-color: var(--card-bg-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-decoration: none;
+            color: var(--text-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            color: var(--primary-color);
+        }
+
+        .action-card h2 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .action-card p {
+            color: var(--light-text-color);
+            line-height: 1.5;
+        }
+
+        /* Estilo para mensagens flash */
+        .flash-message-container {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 100%;
+            max-width: 500px;
+        }
+        .flash-message {
+            padding: 1rem;
+            border-radius: 8px;
+            color: #fff;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .flash-message.sucesso { background-color: var(--success-color); }
+        .flash-message.erro { background-color: var(--danger-color); }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="flash-message-container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    </div>
+
+    <div class="header-nav">
+         <a href="{{ url_for('logout') }}"><button class="button-sair">Sair</button></a>
+    </div>
+
+    <div class="main-container">
+        <div class="welcome-header">
+            <h1>Olá, {{ usuario.nome }}!</h1>
+            <p>O que você gostaria de fazer hoje?</p>
+        </div>
+
+        <div class="action-grid">
+            <a href="{{ url_for('perfil') }}" class="action-card">
+                <h2>Meu Perfil</h2>
+                <p>Veja e atualize suas informações pessoais e de segurança.</p>
+            </a>
+            <a href="{{ url_for('pagina_eventos') }}" class="action-card">
+                <h2>Ver Eventos</h2>
+                <p>Explore os próximos eventos e garanta sua inscrição.</p>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

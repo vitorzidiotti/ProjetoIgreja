@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Eventos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; margin: 0; padding: 20px; }
+        .header-top-actions { position: absolute; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 10; }
+        .main-container { max-width: 1100px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); }
+        .header-container { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .header-container h1 { margin: 0; }
+        .header-btn { padding: 12px 20px; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        .btn-adicionar { background-color: #2ecc71; }
+        .btn-voltar { background-color: #7f8c8d; }
+        .btn-sair { background-color: #e74c3c; }
+        .filtros-container { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; border-bottom: 2px solid #eee; padding-bottom: 20px; }
+        .filtro-btn { padding: 10px 20px; border: 2px solid #5d9cec; background: #fff; color: #5d9cec; border-radius: 25px; cursor: pointer; }
+        .filtro-btn.active { background: #5d9cec; color: #fff; }
+        .eventos-lista { display: grid; gap: 20px; }
+        .evento-card { display: grid; grid-template-columns: 1fr auto; align-items: center; background: #fafafa; border: 1px solid #e0e0e0; padding: 15px 20px; border-radius: 8px; }
+        .evento-info p { margin: 2px 0; color: #555; }
+        .evento-info p strong { color: #333; }
+        .evento-acoes { display: flex; gap: 10px; }
+        .acao-btn { padding: 8px 12px; border: none; border-radius: 5px; color: white; cursor: pointer; text-decoration: none; }
+        .btn-editar { background-color: #f39c12; }
+        .btn-excluir { background-color: #e74c3c; }
+        .btn-status { background-color: #27ae60; }
+        .btn-status.inativo { background-color: #95a5a6; }
+        .eventos-lista.mostrar-ativos .evento-card.inativo { display: none; }
+        .eventos-lista.mostrar-inativos .evento-card.ativo { display: none; }
+    </style>
+</head>
+<body>
+    <div class="header-top-actions">
+        <a href="{{ url_for('admin_dashboard') }}" class="header-btn btn-voltar">Voltar ao Painel</a>
+        <a href="{{ url_for('logout') }}" class="header-btn btn-sair">Sair</a>
+    </div>
+    <div class="main-container">
+        <div class="header-container">
+            <h1>Gerenciar Eventos</h1>
+            <a href="{{ url_for('adicionar_evento') }}" class="header-btn btn-adicionar">+ Adicionar Evento</a>
+        </div>
+        <div class="filtros-container">
+            <button class="filtro-btn active" data-filtro="ativos">Ativos</button>
+            <button class="filtro-btn" data-filtro="inativos">Inativos</button>
+            <button class="filtro-btn" data-filtro="todos">Todos</button>
+        </div>
+        <div id="eventos-lista" class="eventos-lista mostrar-ativos">
+            {% for evento in eventos %}
+            <div class="evento-card {% if evento.ativo %}ativo{% else %}inativo{% endif %}" id="event-{{ evento.id_evento }}">
+                <div class="evento-info">
+                    <p><strong>Evento:</strong> {{ evento.nome_evento }}</p>
+                    <p><strong>Data:</strong> {{ evento.data_evento[8:10] }}/{{ evento.data_evento[5:7] }}/{{ evento.data_evento[0:4] }}</p>
+                    <p><strong>Local:</strong> {{ evento.local }}</p>
+                </div>
+                <div class="evento-acoes">
+                    <a href="{{ url_for('editar_evento_admin', event_id=evento.id_evento) }}" class="acao-btn btn-editar">Editar</a>
+                    <button class="acao-btn btn-status {% if not evento.ativo %}inativo{% endif %}" onclick="atualizarStatus({{ evento.id_evento }}, {{ 'false' if evento.ativo else 'true' }})">
+                        {% if evento.ativo %}Desativar{% else %}Ativar{% endif %}
+                    </button>
+                    <button class="acao-btn btn-excluir" onclick="excluirEvento({{ evento.id_evento }})">Excluir</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const botoesFiltro = document.querySelectorAll('.filtro-btn');
+    const listaEventos = document.getElementById('eventos-lista');
+    botoesFiltro.forEach(botao => {
+        botao.addEventListener('click', function() {
+            botoesFiltro.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            const filtro = this.dataset.filtro;
+            listaEventos.className = 'eventos-lista';
+            listaEventos.classList.add(`mostrar-${filtro}`);
+        });
+    });
+});
+
+function fetchAPI(url, body) {
+    return fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+    }).then(response => response.json());
+}
+
+function atualizarStatus(eventId, newStatus) {
+    fetchAPI("{{ url_for('atualizar_status_evento') }}", { event_id: eventId, ativo: newStatus })
+    .then(data => {
+        alert(data.message);
+        if (data.status === 'sucesso') window.location.reload();
+    });
+}
+
+function excluirEvento(eventId) {
+    if (!confirm('Tem certeza que deseja excluir este evento?')) return;
+    fetchAPI("{{ url_for('excluir_evento') }}", { event_id: eventId })
+    .then(data => {
+        alert(data.message);
+        if (data.status === 'sucesso') {
+            document.getElementById(`event-${eventId}`).remove();
+        }
+    });
+}
+</script>
+</body>
+</html>

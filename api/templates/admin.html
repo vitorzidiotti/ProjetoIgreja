@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel Administrativo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --danger-color: #E74C3C;
+            --text-color: #333;
+            --light-text-color: #777;
+            --bg-color: #f8f9fa;
+            --card-bg-color: #ffffff;
+            --border-color: #e9ecef;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding-top: 5vh;
+        }
+
+        .header-nav {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .button-sair {
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #fff;
+            background-color: var(--danger-color);
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button-sair:hover { background-color: #c0392b; }
+
+        .main-container {
+            width: 100%;
+            max-width: 900px;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .welcome-header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-header p {
+            font-size: 1.2rem;
+            color: var(--light-text-color);
+            margin-bottom: 3rem;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .action-card {
+            background-color: var(--card-bg-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-decoration: none;
+            color: var(--text-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(74, 144, 226, 0.15);
+            color: var(--primary-color);
+        }
+
+        .action-card h2 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .action-card p {
+            color: var(--light-text-color);
+            line-height: 1.5;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="header-nav">
+         <a href="{{ url_for('logout') }}"><button class="button-sair">Sair</button></a>
+    </div>
+
+    <div class="main-container">
+        <div class="welcome-header">
+            <h1>Painel Administrativo</h1>
+            <p>Bem-vindo(a), {{ session.get('nome_usuario') }}! Selecione uma opção para começar.</p>
+        </div>
+
+        <div class="action-grid">
+            <a href="{{ url_for('gerenciar_usuarios') }}" class="action-card">
+                <h2>Gerenciar Usuários</h2>
+                <p>Adicione, edite, remova e altere permissões de usuários.</p>
+            </a>
+            <a href="{{ url_for('gerenciar_eventos') }}" class="action-card">
+                <h2>Gerenciar Eventos</h2>
+                <p>Crie, edite e controle o status de todos os eventos.</p>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

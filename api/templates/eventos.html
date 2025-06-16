@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --success-color: #50E3C2;
+            --danger-color: #E74C3C;
+            --text-color: #333;
+            --light-text-color: #777;
+            --bg-color: #f8f9fa;
+            --card-bg-color: #ffffff;
+            --border-color: #e9ecef;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            color: var(--text-color);
+        }
+
+        .main-container {
+            max-width: 900px;
+            margin: 20px auto;
+        }
+        
+        /* CORREÇÃO: Posicionando o botão no canto superior DIREITO da tela */
+        .header-nav {
+            position: absolute;
+            top: 20px;
+            right: 20px; /* Alterado de 'left' para 'right' */
+            z-index: 10;
+        }
+
+        .button-voltar {
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #fff;
+            /* CORREÇÃO: Alterado para a cor de perigo (vermelho) */
+            background-color: var(--danger-color); 
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .button-voltar:hover { background-color: #c0392b; } /* Tom de vermelho mais escuro */
+
+        .page-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .filtros-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background-color: var(--card-bg-color);
+            padding: 1rem;
+            border-radius: 50px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .filtro-btn {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border: none;
+            background-color: transparent;
+            color: var(--light-text-color);
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .filtro-btn.active {
+            background-color: var(--primary-color);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
+        }
+
+        .eventos-lista { display: grid; gap: 1.5rem; }
+
+        .evento-card {
+            background: var(--card-bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        .evento-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .evento-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            cursor: pointer;
+        }
+
+        .evento-header h3 { margin: 0; font-size: 1.25rem; font-weight: 600; }
+        .expand-icon { font-size: 1.5rem; transition: transform 0.3s; color: var(--primary-color); }
+        .expand-icon.expanded { transform: rotate(180deg); }
+
+        .evento-detalhes {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.4s ease-in-out;
+            border-top: 1px solid var(--border-color);
+            margin: 0 1.5rem;
+        }
+        
+        .evento-detalhes.show { max-height: 500px; opacity: 1; padding-top: 1.5rem; }
+        .evento-detalhes p { margin: 0.5rem 0; color: var(--light-text-color); line-height: 1.6; }
+        .evento-detalhes strong { color: var(--text-color); }
+        
+        .btn-inscrever {
+            display: inline-block;
+            padding: 12px 24px;
+            margin-top: 1rem;
+            background-color: var(--success-color);
+            color: white;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn-inscrever:hover { background-color: #48CFAE; }
+        .btn-inscrever.inscrito { background-color: #bdc3c7; cursor: not-allowed; }
+
+        .eventos-lista.mostrar-ativos .evento-card.inativo { display: none; }
+        .eventos-lista.mostrar-encerrados .evento-card.ativo { display: none; }
+        
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .status-dot.ativo { background-color: var(--success-color); }
+        .status-dot.encerrado { background-color: var(--danger-color); }
+
+    </style>
+</head>
+<body>
+    <div class="header-nav">
+         <a href="{{ url_for('inicio') }}" class="button-voltar">Voltar</a>
+    </div>
+
+    <div class="main-container">
+        <h1 class="page-title">Próximos Eventos</h1>
+
+        <div class="filtros-container">
+            <button class="filtro-btn active" data-filtro="ativos">Ativos</button>
+            <button class="filtro-btn" data-filtro="encerrados">Encerrados</button>
+            <button class="filtro-btn" data-filtro="todos">Todos</button>
+        </div>
+
+        <div id="eventos-lista" class="eventos-lista mostrar-ativos">
+            {% if eventos %}
+                {% for evento in eventos %}
+                    <div class="evento-card {% if evento.ativo == True %}ativo{% else %}inativo{% endif %}">
+                        <div class="evento-header" data-target="#detalhes-{{ evento.id_evento }}">
+                            <h3>{{ evento.nome_evento }}</h3>
+                            <div class="status-indicator">
+                                <div class="status-dot {% if evento.ativo == True %}ativo{% else %}encerrado{% endif %}"></div>
+                                <span>{% if evento.ativo == True %}Ativo{% else %}Encerrado{% endif %}</span>
+                            </div>
+                        </div>
+                        <div class="evento-detalhes" id="detalhes-{{ evento.id_evento }}">
+                            <p><strong>Data:</strong> {{ evento.data_evento[8:10] }}/{{ evento.data_evento[5:7] }}/{{ evento.data_evento[0:4] }}</p>
+                            <p><strong>Local:</strong> {{ evento.local }}</p>
+                            <p><strong>Descrição:</strong> {{ evento.descricao or "Nenhuma descrição fornecida." }}</p>
+                           
+                            {% if evento.ativo == True %}
+                                <div class="inscricao-area">
+                                {% if evento.id_evento in eventos_inscritos %}
+                                    <button class="btn-inscrever inscrito" disabled>Inscrito</button>
+                                {% else %}
+                                    <button class="btn-inscrever" data-evento-id="{{ evento.id_evento }}">Inscrever-se</button>
+                                {% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p style="text-align:center;">Nenhum evento encontrado.</p>
+            {% endif %}
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const botoesFiltro = document.querySelectorAll('.filtro-btn');
+            const listaEventos = document.getElementById('eventos-lista');
+
+            botoesFiltro.forEach(botao => {
+                botao.addEventListener('click', function() {
+                    botoesFiltro.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    const filtro = this.getAttribute('data-filtro');
+                    listaEventos.className = 'eventos-lista';
+                    listaEventos.classList.add(filtro === 'ativos' ? 'mostrar-ativos' : (filtro === 'encerrados' ? 'mostrar-encerrados' : 'mostrar-todos'));
+                });
+            });
+
+            document.querySelectorAll('.evento-header').forEach(header => {
+                header.addEventListener('click', function() {
+                    const targetSelector = this.getAttribute('data-target');
+                    const detalhes = document.querySelector(targetSelector);
+                    if (detalhes) {
+                        detalhes.classList.toggle('show');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.btn-inscrever').forEach(button => {
+                if (button.disabled) return;
+                button.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    const eventoId = this.getAttribute('data-evento-id');
+                    
+                    fetch("{{ url_for('inscrever_evento') }}", {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id_evento: eventoId })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message);
+                        if (data.status === 'sucesso') {
+                            this.textContent = 'Inscrito';
+                            this.disabled = true;
+                            this.classList.add('inscrito');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro:', error);
+                        alert('Não foi possível realizar a inscrição.');
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
