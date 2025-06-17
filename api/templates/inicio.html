@@ -1,189 +1,190 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Início</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #4A90E2;
-            --success-color: #50E3C2;
-            --danger-color: #E74C3C;
-            --text-color: #333;
-            --light-text-color: #777;
-            --bg-color: #f8f9fa;
-            --card-bg-color: #ffffff;
-            --border-color: #e9ecef;
-        }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); margin: 0; padding: 20px; color: var(--text-color); }
-        .main-container { width: 100%; max-width: 800px; text-align: center; padding: 2rem; margin: 0 auto; }
-        .header-nav { position: absolute; top: 20px; right: 20px; }
-        .button-sair { padding: 12px 28px; border-radius: 8px; text-decoration: none; color: #fff; background-color: var(--danger-color); font-weight: 600; font-size: 1rem; border: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .button-sair:hover { background-color: #c0392b; box-shadow: 0 6px 20px rgba(0,0,0,0.15); transform: translateY(-2px); }
-        .welcome-header h1 { font-size: 2.8rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .welcome-header p { font-size: 1.2rem; color: var(--light-text-color); margin-bottom: 3rem; }
-        .action-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 4rem; }
-        .action-card { background-color: var(--card-bg-color); border-radius: 12px; padding: 2rem; text-decoration: none; color: var(--text-color); box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: all 0.3s ease; border: 1px solid var(--border-color); }
-        .action-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); color: var(--primary-color); }
-        .action-card h2 { font-size: 1.5rem; margin-top: 0; margin-bottom: 0.5rem; }
-        .action-card p { color: var(--light-text-color); line-height: 1.5; }
-        .today-events-section { text-align: left; }
-        .today-events-section h2 { text-align: center; margin-bottom: 2rem; }
-        .event-today-card { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg-color); padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 1rem; }
-        .event-today-card h3 { margin: 0; font-size: 1.2rem; }
-        .event-today-card p { margin: 5px 0 0; color: var(--light-text-color); }
-        .btn-confirmar { background-color: var(--primary-color); color: white; padding: 10px 20px; border-radius: 8px; cursor: pointer; border: none; font-weight: 600; }
-        .btn-confirmar:disabled { background-color: #bdc3c7; cursor: not-allowed; }
-        /* Adicionei margem para o mixin do SweetAlert */
-        .btn.mx-2 { margin: 0 5px; } 
-    </style>
-    
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Início</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --success-color: #50E3C2;
+            --danger-color: #E74C3C;
+            --text-color: #333;
+            --light-text-color: #777;
+            --bg-color: #f8f9fa;
+            --card-bg-color: #ffffff;
+            --border-color: #e9ecef;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); margin: 0; padding: 20px; color: var(--text-color); }
+        .main-container { width: 100%; max-width: 800px; text-align: center; padding: 2rem; margin: 0 auto; }
+        .header-nav { position: absolute; top: 20px; right: 20px; }
+        .button-sair { padding: 12px 28px; border-radius: 8px; text-decoration: none; color: #fff; background-color: var(--danger-color); font-weight: 600; font-size: 1rem; border: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .button-sair:hover { background-color: #c0392b; box-shadow: 0 6px 20px rgba(0,0,0,0.15); transform: translateY(-2px); }
+        .welcome-header h1 { font-size: 2.8rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .welcome-header p { font-size: 1.2rem; color: var(--light-text-color); margin-bottom: 3rem; }
+        .action-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 4rem; }
+        .action-card { background-color: var(--card-bg-color); border-radius: 12px; padding: 2rem; text-decoration: none; color: var(--text-color); box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: all 0.3s ease; border: 1px solid var(--border-color); }
+        .action-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); color: var(--primary-color); }
+        .action-card h2 { font-size: 1.5rem; margin-top: 0; margin-bottom: 0.5rem; }
+        .action-card p { color: var(--light-text-color); line-height: 1.5; }
+        .today-events-section { text-align: left; }
+        .today-events-section h2 { text-align: center; margin-bottom: 2rem; }
+        .event-today-card { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg-color); padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 1rem; }
+        .event-today-card h3 { margin: 0; font-size: 1.2rem; }
+        .event-today-card p { margin: 5px 0 0; color: var(--light-text-color); }
+        .btn-confirmar { background-color: var(--primary-color); color: white; padding: 10px 20px; border-radius: 8px; cursor: pointer; border: none; font-weight: 600; }
+        .btn-confirmar:disabled { background-color: #bdc3c7; cursor: not-allowed; }
+        /* Adicionei margem para o mixin do SweetAlert */
+        .btn.mx-2 { margin: 0 5px; } 
+    </style>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
-    <div class="header-nav">
-         <a href="{{ url_for('logout') }}"><button class="button-sair">Sair</button></a>
-    </div>
+    <div class="header-nav">
+         <a href="{{ url_for('logout') }}"><button class="button-sair">Sair</button></a>
+    </div>
 
-    <div class="main-container">
-        <div class="welcome-header">
-            <h1>Olá {{ session.get('nome_usuario', 'Usuário') }}!</h1>
-            <p>O que você gostaria de fazer hoje?</p>
-        </div>
+    <div class="main-container">
+        <div class="welcome-header">
+            <h1>Olá {{ session.get('nome_usuario', 'Usuário') }}!</h1>
+            <p>O que você gostaria de fazer hoje?</p>
+        </div>
 
-        <div class="action-grid">
-            <a href="{{ url_for('perfil') }}" class="action-card">
-                <h2>Meu Perfil</h2>
-                <p>Veja e atualize suas informações pessoais e de segurança.</p>
-            </a>
-            <a href="{{ url_for('pagina_eventos') }}" class="action-card">
-                <h2>Ver Eventos</h2>
-                <p>Explore os próximos eventos e garanta sua inscrição.</p>
-            </a>
-        </div>
+        <div class="action-grid">
+            <a href="{{ url_for('perfil') }}" class="action-card">
+                <h2>Meu Perfil</h2>
+                <p>Veja e atualize suas informações pessoais e de segurança.</p>
+            </a>
+            <a href="{{ url_for('pagina_eventos') }}" class="action-card">
+                <h2>Ver Eventos</h2>
+                <p>Explore os próximos eventos e garanta sua inscrição.</p>
+            </a>
+        </div>
 
-        {% if eventos_de_hoje %}
-        <div class="today-events-section">
-            <h2>Eventos de Hoje</h2>
-            {% for evento in eventos_de_hoje %}
-            <div class="event-today-card">
-                <div class="event-info">
-                    <h3>{{ evento.nome_evento }}</h3>
-                    <p>{{ evento.local }}</p>
-                </div>
-                <button class="btn-confirmar" data-event-id="{{ evento.id_evento }}">Confirmar Presença</button>
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-    </div>
+        {% if eventos_de_hoje %}
+        <div class="today-events-section">
+            <h2>Eventos de Hoje</h2>
+            {% for evento in eventos_de_hoje %}
+            <div class="event-today-card">
+                <div class="event-info">
+                    <h3>{{ evento.nome_evento }}</h3>
+                    <p>{{ evento.local }}</p>
+                </div>
+                <button class="btn-confirmar" data-event-id="{{ evento.id_evento }}">Confirmar Presença</button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
 
-    <script src="alerts.js"></script>
+    {# CORRECTION: Changed src="alerts.js" to use url_for to correctly reference 'alert.js' in the static folder #}
+    <script src="{{ url_for('static', filename='alert.js') }}"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.btn-confirmar').forEach(button => {
-                button.addEventListener('click', function() {
-                    const thisButton = this;
-                    const eventId = this.dataset.eventId;
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.btn-confirmar').forEach(button => {
+                button.addEventListener('click', function() {
+                    const thisButton = this;
+                    const eventId = this.dataset.eventId;
 
-                    // PASSO A: Pergunta ao usuário se ele realmente quer confirmar
-                    exibirAlertaConfirmacao(
-                        'Confirmar Presença?',
-                        'Para confirmar, precisaremos acessar sua localização. Você concorda?',
-                        'Sim, confirmar!',
-                        () => {
-                            // PASSO B: Se o usuário concordar, a lógica de geolocalização começa aqui
-                            iniciarConfirmacao(thisButton, eventId);
-                        }
-                    );
-                });
-            });
-        });
+                    // PASSO A: Pergunta ao usuário se ele realmente quer confirmar
+                    exibirAlertaConfirmacao(
+                        'Confirmar Presença?',
+                        'Para confirmar, precisaremos acessar sua localização. Você concorda?',
+                        'Sim, confirmar!',
+                        () => {
+                            // PASSO B: Se o usuário concordar, a lógica de geolocalização começa aqui
+                            iniciarConfirmacao(thisButton, eventId);
+                        }
+                    );
+                });
+            });
+        });
 
-        function iniciarConfirmacao(thisButton, eventId) {
-            thisButton.textContent = 'Verificando...';
-            thisButton.disabled = true;
+        function iniciarConfirmacao(thisButton, eventId) {
+            thisButton.textContent = 'Verificando...';
+            thisButton.disabled = true;
 
-            if (!navigator.geolocation) {
-                // Usa a nova função de alerta para erro
-                exibirAlertaErro('Geolocalização Indisponível', 'Seu navegador não suporta geolocalização.')
-                    .then(() => {
-                        thisButton.textContent = 'Confirmar Presença';
-                        thisButton.disabled = false;
-                    });
-                return;
-            }
+            if (!navigator.geolocation) {
+                // Usa a nova função de alerta para erro
+                exibirAlertaErro('Geolocalização Indisponível', 'Seu navegador não suporta geolocalização.')
+                    .then(() => {
+                        thisButton.textContent = 'Confirmar Presença';
+                        thisButton.disabled = false;
+                    });
+                return;
+            }
 
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    // Sucesso ao obter localização, agora envia para o servidor
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    // Sucesso ao obter localização, agora envia para o servidor
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
 
-                    fetch("{{ url_for('confirmar_presenca') }}", {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ event_id: eventId, lat: lat, lon: lon })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.status === 'sucesso') {
-                            // Usa o alerta de sucesso
-                            exibirAlertaSucesso('Presença Confirmada!', data.message)
-                                .then(() => {
-                                    // Remove o card do evento da tela após o sucesso
-                                    thisButton.closest('.event-today-card').remove();
-                                });
-                        } else {
-                            // Usa o alerta de erro com a mensagem do servidor
-                            exibirAlertaErro('Falha na Confirmação', data.message)
-                                .then(() => {
-                                    thisButton.textContent = 'Tentar Novamente';
-                                    thisButton.disabled = false;
-                                });
-                        }
-                    })
-                    .catch(err => {
-                        console.error('Erro na requisição:', err);
-                        // Usa o alerta de erro para falhas de comunicação
-                        exibirAlertaErro('Erro de Rede', 'Ocorreu um erro de comunicação com o servidor.')
-                            .then(() => {
-                                thisButton.textContent = 'Tentar Novamente';
-                                thisButton.disabled = false;
-                            });
-                    });
-                },
-                (error) => {
-                    // Trata erros específicos de geolocalização
-                    let errorMessage = 'Não foi possível obter sua localização. ';
-                    switch(error.code) {
-                        case error.PERMISSION_DENIED:
-                            errorMessage = "Você negou a permissão de acesso à localização. Habilite nas configurações do seu navegador para continuar.";
-                            break;
-                        case error.POSITION_UNAVAILABLE:
-                            errorMessage = "As informações de localização não estão disponíveis no momento.";
-                            break;
-                        case error.TIMEOUT:
-                            errorMessage = "A requisição para obter a localização expirou.";
-                            break;
-                        default:
-                            errorMessage = "Ocorreu um erro desconhecido ao tentar obter a localização.";
-                            break;
-                    }
-                    // Usa o alerta de erro para falhas de geolocalização
-                    exibirAlertaErro('Erro de Localização', errorMessage)
-                        .then(() => {
-                            thisButton.textContent = 'Confirmar Presença';
-                            thisButton.disabled = false;
-                        });
-                }
-            );
-        }
-    </script>
+                    fetch("{{ url_for('confirmar_presenca') }}", {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ event_id: eventId, lat: lat, lon: lon })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'sucesso') {
+                            // Usa o alerta de sucesso
+                            exibirAlertaSucesso('Presença Confirmada!', data.message)
+                                .then(() => {
+                                    // Remove o card do evento da tela após o sucesso
+                                    thisButton.closest('.event-today-card').remove();
+                                });
+                        } else {
+                            // Usa o alerta de erro com a mensagem do servidor
+                            exibirAlertaErro('Falha na Confirmação', data.message)
+                                .then(() => {
+                                    thisButton.textContent = 'Tentar Novamente';
+                                    thisButton.disabled = false;
+                                });
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Erro na requisição:', err);
+                        // Usa o alerta de erro para falhas de comunicação
+                        exibirAlertaErro('Erro de Rede', 'Ocorreu um erro de comunicação com o servidor.')
+                            .then(() => {
+                                thisButton.textContent = 'Tentar Novamente';
+                                thisButton.disabled = false;
+                            });
+                    });
+                },
+                (error) => {
+                    // Trata erros específicos de geolocalização
+                    let errorMessage = 'Não foi possível obter sua localização. ';
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            errorMessage = "Você negou a permissão de acesso à localização. Habilite nas configurações do seu navegador para continuar.";
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            errorMessage = "As informações de localização não estão disponíveis no momento.";
+                            break;
+                        case error.TIMEOUT:
+                            errorMessage = "A requisição para obter a localização expirou.";
+                            break;
+                        default:
+                            errorMessage = "Ocorreu um erro desconhecido ao tentar obter a localização.";
+                            break;
+                    }
+                    // Usa o alerta de erro para falhas de geolocalização
+                    exibirAlertaErro('Erro de Localização', errorMessage)
+                        .then(() => {
+                            thisButton.textContent = 'Confirmar Presença';
+                            thisButton.disabled = false;
+                        });
+                }
+            );
+        }
+    </script>
 </body>
 </html>
