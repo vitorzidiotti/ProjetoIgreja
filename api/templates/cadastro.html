@@ -140,17 +140,6 @@
 <body>
     <div class="form-container">
         <h1>Cadastre-se</h1>
-        
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-message-container">
-                    {% for category, message in messages %}
-                        <div class="flash-message {{ category }}">{{ message }}</div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
-
         <form method="POST" action="{{ url_for('cadastro') }}">
             <div class="form-group">
                 <label for="nome">Nome Completo</label>
