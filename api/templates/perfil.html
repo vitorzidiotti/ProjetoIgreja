@@ -1,549 +1,286 @@
 <!DOCTYPE html>
-
 <html lang="pt-br">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Meu Perfil</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <style>
-
-        :root {
-
-            --primary-color: #4A90E2;
-
-            --success-color: #2ecc71;
-
-            --danger-color: #E74C3C;
-
-            --info-color: #3498db;
-
-            --text-color: #333;
-
-            --light-text-color: #777;
-
-            --bg-color: #f8f9fa;
-
-            --card-bg-color: #ffffff;
-
-            --border-color: #e9ecef;
-
-            --fade-duration: 0.5s; 
-
-        }
-
-
-
-        body {
-
-            font-family: 'Inter', sans-serif;
-
-            background: var(--bg-color);
-
-            margin: 0;
-
-            padding: 20px;
-
-            color: var(--text-color);
-
-        }
-
-
-
-        .header-nav {
-
-            position: absolute;
-
-            top: 20px;
-
-            right: 20px;
-
-            z-index: 10;
-
-        }
-
-
-
-        .button-voltar {
-
-            padding: 10px 20px;
-
-            border-radius: 8px;
-
-            text-decoration: none;
-
-            color: #fff;
-
-            background-color: var(--danger-color);
-
-            font-weight: 500;
-
-            border: none;
-
-            cursor: pointer;
-
-            transition: background-color 0.3s;
-
-        }
-
-        .button-voltar:hover { background-color: #c0392b; }
-
-
-
-        .perfil-container {
-
-            max-width: 600px;
-
-            margin: 40px auto;
-
-            background: var(--card-bg-color);
-
-            padding: 40px;
-
-            border-radius: 12px;
-
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
-
-        }
-
-
-
-        h1 {
-
-            text-align: center;
-
-            margin-bottom: 2rem;
-
-            font-size: 2.5rem;
-
-            font-weight: 700;
-
-        }
-
-
-
-        .perfil-dados-card {
-
-            border: 1px solid var(--border-color);
-
-            border-radius: 8px;
-
-            padding: 25px;
-
-            margin-bottom: 25px;
-
-        }
-
-
-
-        .perfil-dados-card h3 {
-
-            margin-top: 0;
-
-            margin-bottom: 20px;
-
-            border-bottom: 1px solid var(--border-color);
-
-            padding-bottom: 15px;
-
-            color: var(--text-color);
-
-            font-size: 1.25rem;
-
-        }
-
-
-
-        .form-group {
-
-            margin-bottom: 1.2rem;
-
-        }
-
-
-
-        .form-group label {
-
-            display: block;
-
-            margin-bottom: 8px;
-
-            font-weight: 600;
-
-            color: var(--light-text-color);
-
-        }
-
-
-
-        .input-wrapper {
-
-            display: flex;
-
-            align-items: center;
-
-        }
-
-
-
-        .form-input {
-
-            flex-grow: 1;
-
-            padding: 12px;
-
-            border: 1px solid #ccc;
-
-            border-radius: 8px;
-
-            font-size: 1rem;
-
-            background-color: #f9f9f9;
-
-        }
-
-
-
-        .form-input:not([readonly]) {
-
-            background-color: #fff;
-
-            border-color: var(--primary-color);
-
-            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
-
-        }
-
-
-
-        .icone-editar {
-
-            margin-left: 15px;
-
-            cursor: pointer;
-
-            font-size: 20px;
-
-            color: var(--primary-color);
-
-            transition: color 0.3s;
-
-        }
-
-        .icone-editar:hover {
-
-            color: #2980b9;
-
-        }
-
-
-
-        .button-salvar {
-
-            display: block;
-
-            width: 100%;
-
-            padding: 15px;
-
-            font-size: 1rem;
-
-            font-weight: 600;
-
-            background-color: var(--success-color);
-
-            color: white;
-
-            border: none;
-
-            border-radius: 8px;
-
-            margin-top: 1.5rem;
-
-            cursor: pointer;
-
-            transition: background-color 0.3s;
-
-        }
-
-        .button-salvar:hover {
-
-            background-color: #27ae60;
-
-        }
-
-
-
-        .flash-message-container {
-
-            position: fixed;
-
-            top: 20px;
-
-            left: 50%;
-
-            transform: translateX(-50%);
-
-            z-index: 1000;
-
-            width: 90%;
-
-            max-width: 500px;
-
-            display: flex; 
-
-            flex-direction: column; 
-
-            align-items: center; 
-
-            pointer-events: none; 
-
-        }
-
-
-
-        .flash-message {
-
-            background-color: #f9f9f9;
-
-            color: var(--text-color);
-
-            padding: 1rem 1.5rem;
-
-            margin-bottom: 0.5rem;
-
-            border-radius: 8px;
-
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-
-            opacity: 1;
-
-            transition: opacity var(--fade-duration) ease-in-out;
-
-            pointer-events: auto;
-
-        }
-
-
-
-        .flash-message.sucesso { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-
-        .flash-message.erro { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-
-        .flash-message.info { background-color: #e7f3fe; color: #0c5460; border: 1px solid #b8daff; }
-
-
-
-    </style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --success-color: #2ecc71;
+            --danger-color: #E74C3C;
+            --info-color: #3498db;
+            --text-color: #333;
+            --light-text-color: #777;
+            --bg-color: #f8f9fa;
+            --card-bg-color: #ffffff;
+            --border-color: #e9ecef;
+            --fade-duration: 0.5s; 
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            color: var(--text-color);
+        }
+
+        .header-nav {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+
+        .button-voltar {
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #fff;
+            background-color: var(--danger-color);
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button-voltar:hover { background-color: #c0392b; }
+
+        .perfil-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: var(--card-bg-color);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .perfil-dados-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .perfil-dados-card h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            color: var(--text-color);
+            font-size: 1.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--light-text-color);
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-input {
+            flex-grow: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: #f9f9f9;
+        }
+
+        .form-input:not([readonly]) {
+            background-color: #fff;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+        }
+
+        .icone-editar {
+            margin-left: 15px;
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--primary-color);
+            transition: color 0.3s;
+        }
+        .icone-editar:hover {
+            color: #2980b9;
+        }
+
+        .button-salvar {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button-salvar:hover {
+            background-color: #27ae60;
+        }
+
+        .flash-message-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 90%;
+            max-width: 500px;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            pointer-events: none; 
+        }
+
+        .flash-message {
+            background-color: #f9f9f9;
+            color: var(--text-color);
+            padding: 1rem 1.5rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            opacity: 1;
+            transition: opacity var(--fade-duration) ease-in-out;
+            pointer-events: auto;
+        }
+
+        .flash-message.sucesso { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .flash-message.erro { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .flash-message.info { background-color: #e7f3fe; color: #0c5460; border: 1px solid #b8daff; }
+
+    </style>
 </head>
-
-
 
 <body>
 
-    <div class="header-nav">
-
-        <a href="{{ url_for('inicio') }}" class="button-voltar">Voltar</a>
-
-    </div>
-
-
-
-    <div class="perfil-container">
-
-        <h1>Meu Perfil</h1>
-
-        <form method="POST" action="{{ url_for('perfil') }}">
-
-            <div class="perfil-dados-card">
-
-                <h3>Seus Dados</h3>
-
-                <div class="form-group">
-
-                    <label for="nome">Nome</label>
-
-                    <div class="input-wrapper">
-
-                        <input type="text" id="nome" name="nome" value="{{ usuario.nome }}" class="form-input" readonly>
-
-                        <span class="icone-editar" onclick="toggleEdit('nome')">&#9998;</span>
-
-                    </div>
-
-                </div>
-
-                 <div class="form-group">
-
-                    <label for="cpf">CPF</label>
-
-                    <div class="input-wrapper">
-
-                        <input type="text" id="cpf" name="cpf" value="{{ usuario.cpf }}" class="form-input" readonly>
-
-                        <span class="icone-editar" onclick="toggleEdit('cpf')">&#9998;</span>
-
-                    </div>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label for="email">Email</label>
-
-                    <div class="input-wrapper">
-
-                        <input type="email" id="email" name="email" value="{{ usuario.email }}" class="form-input" readonly>
-
-                        <span class="icone-editar" onclick="toggleEdit('email')">&#9998;</span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="perfil-dados-card">
-
-                <h3>Redefinir Senha</h3>
-
-                <div class="form-group">
-
-                    <label for="nova_senha">Nova Senha</label>
-
-                    <input type="password" id="nova_senha" name="nova_senha" class="form-input" placeholder="Deixe em branco para não alterar">
-
-                </div>
-
-                <div class="form-group">
-
-                    <label for="confirmar_senha">Confirmar Nova Senha</label>
-
-                    <input type="password" id="confirmar_senha" name="confirmar_senha" class="form-input" placeholder="Confirme a nova senha">
-
-                </div>
-
-            </div>
-
-
-
-            <button type="submit" class="button-salvar">Salvar Alterações</button>
-
-        </form>
-
-    </div>
-
-
-
-    <script>
-
-        function toggleEdit(fieldId) {
-
-            const input = document.getElementById(fieldId);
-
-            const isReadOnly = input.readOnly;
-
-            input.readOnly = !isReadOnly;
-
-
-
-            if (isReadOnly) { 
-
-                input.focus();
-
-                
-
-                input.setSelectionRange(input.value.length, input.value.length);
-
-            }
-
-        }
-
-    </script>
-
-    <script>
-
-        document.addEventListener('DOMContentLoaded', function() {
-
-            const flashMessages = document.querySelectorAll('.flash-message');
-
-            flashMessages.forEach(function(msg) {
-
-                setTimeout(function() {
-
-                    msg.style.opacity = '0';
-
-                    setTimeout(function() {
-
-                        msg.remove();
-
-                    }, parseFloat(getComputedStyle(msg).transitionDuration) * 1000);
-
-                }, 3000); 
-
-            });
-
-        });
-
-    </script>
-
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-message-container">
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div class="header-nav">
+        <a href="{{ url_for('inicio') }}" class="button-voltar">Voltar</a>
+    </div>
+
+    <div class="perfil-container">
+        <h1>Meu Perfil</h1>
+        <form method="POST" action="{{ url_for('perfil') }}">
+            <div class="perfil-dados-card">
+                <h3>Seus Dados</h3>
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="nome" name="nome" value="{{ usuario.nome }}" class="form-input" readonly>
+                        <span class="icone-editar" onclick="toggleEdit('nome')">&#9998;</span>
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label for="cpf">CPF</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="cpf" name="cpf" value="{{ usuario.cpf }}" class="form-input" readonly>
+                        <span class="icone-editar" onclick="toggleEdit('cpf')">&#9998;</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <div class="input-wrapper">
+                        <input type="email" id="email" name="email" value="{{ usuario.email }}" class="form-input" readonly>
+                        <span class="icone-editar" onclick="toggleEdit('email')">&#9998;</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="perfil-dados-card">
+                <h3>Redefinir Senha</h3>
+                <div class="form-group">
+                    <label for="nova_senha">Nova Senha</label>
+                    <input type="password" id="nova_senha" name="nova_senha" class="form-input" placeholder="Deixe em branco para não alterar">
+                </div>
+                <div class="form-group">
+                    <label for="confirmar_senha">Confirmar Nova Senha</label>
+                    <input type="password" id="confirmar_senha" name="confirmar_senha" class="form-input" placeholder="Confirme a nova senha">
+                </div>
+            </div>
+
+            <button type="submit" class="button-salvar">Salvar Alterações</button>
+        </form>
+    </div>
+
+    <script>
+        function toggleEdit(fieldId) {
+            const input = document.getElementById(fieldId);
+            const isReadOnly = input.readOnly;
+            input.readOnly = !isReadOnly;
+
+            if (isReadOnly) { 
+                input.focus();
+                
+                input.setSelectionRange(input.value.length, input.value.length);
+            }
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const flashMessages = document.querySelectorAll('.flash-message');
+            flashMessages.forEach(function(msg) {
+                setTimeout(function() {
+                    msg.style.opacity = '0';
+                    setTimeout(function() {
+                        msg.remove();
+                    }, parseFloat(getComputedStyle(msg).transitionDuration) * 1000);
+                }, 3000); 
+            });
+        });
+    </script>
 </body>
-
 <script>
+    function applyCpfMask(cpfInput) {
+        cpfInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            value = value.slice(0, 11); 
 
-    function applyCpfMask(cpfInput) {
+            if (value.length > 9) {
+                value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+            } else if (value.length > 6) {
+                value = value.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
+            } else if (value.length > 3) {
+                value = value.replace(/(\d{3})(\d{1,3})/, '$1.$2');
+            }
+            e.target.value = value;
+        });
+    }
 
-        cpfInput.addEventListener('input', (e) => {
-
-            let value = e.target.value.replace(/\D/g, '');
-
-            value = value.slice(0, 11); 
-
-
-
-            if (value.length > 9) {
-
-                value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-
-            } else if (value.length > 6) {
-
-                value = value.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
-
-            } else if (value.length > 3) {
-
-                value = value.replace(/(\d{3})(\d{1,3})/, '$1.$2');
-
-            }
-
-            e.target.value = value;
-
-        });
-
-    }
-
-
-
-    document.addEventListener('DOMContentLoaded', () => {
-
-        const cpfInputs = document.querySelectorAll('input[name="cpf"]');
-
-        cpfInputs.forEach(applyCpfMask);
-
-    });
-
+    document.addEventListener('DOMContentLoaded', () => {
+        const cpfInputs = document.querySelectorAll('input[name="cpf"]');
+        cpfInputs.forEach(applyCpfMask);
+    });
 </script>
-
 </html>
