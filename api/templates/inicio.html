@@ -46,23 +46,13 @@
 </head>
 
 <body>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <div class="flash-message-container">
-            {% for category, message in messages %}
-                <div class="flash-message {{ category }}">{{ message }}</div>
-            {% endfor %}
-            </div>
-        {% endif %}
-    {% endwith %}
-
     <div class="header-nav">
          <a href="{{ url_for('logout') }}"><button class="button-sair">Sair</button></a>
     </div>
 
     <div class="main-container">
         <div class="welcome-header">
-            <h1>Olá, {{ session.get('nome_usuario', 'Usuário') }}!</h1>
+            <h1>Olá {{ session.get('nome_usuario', 'Usuário') }}!</h1>
             <p>O que você gostaria de fazer hoje?</p>
         </div>
 
