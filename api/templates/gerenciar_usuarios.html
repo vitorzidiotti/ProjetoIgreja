@@ -19,15 +19,16 @@
             --bg-color: #f8f9fa;
             --card-bg-color: #ffffff;
             --border-color: #e9ecef;
+            --fade-duration: 0.5s;
         }
 
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background: var(--bg-color); 
-            margin: 0; 
-            padding: 20px; 
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-color);
+            margin: 0;
+            padding: 20px;
         }
-        
+
         .header-top-actions {
             position: absolute;
             top: 20px;
@@ -37,35 +38,35 @@
             z-index: 10;
         }
 
-        .main-container { 
-            max-width: 1100px; 
-            margin: 20px auto; 
-            background: var(--card-bg-color); 
-            padding: 30px; 
-            border-radius: 12px; 
+        .main-container {
+            max-width: 1100px;
+            margin: 20px auto;
+            background: var(--card-bg-color);
+            padding: 30px;
+            border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
         }
 
-        .header-container { 
-            display: flex; 
+        .header-container {
+            display: flex;
             flex-wrap: wrap;
-            justify-content: space-between; 
-            align-items: center; 
+            justify-content: space-between;
+            align-items: center;
             gap: 1rem;
-            margin-bottom: 1.5rem; 
+            margin-bottom: 1.5rem;
         }
-        .header-container h1 { 
-            margin: 0; 
+        .header-container h1 {
+            margin: 0;
             font-size: 2.2rem;
             font-weight: 700;
         }
-        
-        .header-btn { 
-            padding: 12px 20px; 
-            color: white; 
-            text-decoration: none; 
-            border-radius: 8px; 
-            font-weight: 600; 
+
+        .header-btn {
+            padding: 12px 20px;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
             border: none;
             cursor: pointer;
             transition: background-color 0.3s;
@@ -77,59 +78,59 @@
         .btn-sair { background-color: var(--danger-color); }
         .btn-sair:hover { background-color: #c0392b; }
 
-        .filtros-container { 
-            display: flex; 
-            justify-content: center; 
-            gap: 1rem; 
-            margin-bottom: 2rem; 
-            border-bottom: 1px solid var(--border-color); 
-            padding-bottom: 1.5rem; 
+        .filtros-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
         }
-        .filtro-btn { 
-            padding: 0.75rem 1.5rem; 
-            border: none; 
-            background: #e9ecef; 
-            color: var(--light-text-color); 
-            border-radius: 30px; 
-            cursor: pointer; 
+        .filtro-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: #e9ecef;
+            color: var(--light-text-color);
+            border-radius: 30px;
+            cursor: pointer;
             font-weight: 600;
-            transition: all 0.3s; 
+            transition: all 0.3s;
         }
-        .filtro-btn.active { 
-            background: var(--primary-color); 
-            color: #fff; 
+        .filtro-btn.active {
+            background: var(--primary-color);
+            color: #fff;
             box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
         }
 
         .usuarios-lista { display: grid; gap: 1rem; }
-        
-        .usuario-card { 
+
+        .usuario-card {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            align-items: center; 
+            align-items: center;
             gap: 1rem;
-            background: #fafafa; 
-            border: 1px solid var(--border-color); 
-            padding: 1rem 1.5rem; 
-            border-radius: 8px; 
+            background: #fafafa;
+            border: 1px solid var(--border-color);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
         }
         .usuario-info { flex-grow: 1; }
         .usuario-info p { margin: 4px 0; color: var(--light-text-color); }
         .usuario-info p strong { color: var(--text-color); }
-        
-        .usuario-acoes { 
+
+        .usuario-acoes {
             display: flex;
-            flex-wrap: wrap; 
-            gap: 10px; 
+            flex-wrap: wrap;
+            gap: 10px;
         }
-        .acao-btn { 
-            padding: 8px 14px; 
-            border: none; 
-            border-radius: 6px; 
-            color: white; 
-            cursor: pointer; 
-            text-decoration: none; 
+        .acao-btn {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
             font-weight: 500;
             transition: opacity 0.3s;
         }
@@ -142,6 +143,36 @@
 
         .usuarios-lista.mostrar-membros .usuario-card.admin { display: none; }
         .usuarios-lista.mostrar-admins .usuario-card.membro { display: none; }
+        .flash-message-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 90%;
+            max-width: 500px;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            pointer-events: none; 
+        }
+
+        .flash-message {
+            background-color: #f9f9f9;
+            color: var(--text-color);
+            padding: 1rem 1.5rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            opacity: 1;
+            transition: opacity var(--fade-duration) ease-in-out;
+            pointer-events: auto;
+        }
+
+        .flash-message.sucesso { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .flash-message.erro { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .flash-message.info { background-color: #e7f3fe; color: #0c5460; border: 1px solid #b8daff; }
+
     </style>
 </head>
 <body>
@@ -149,19 +180,28 @@
         <a href="{{ url_for('admin_dashboard') }}" class="header-btn btn-voltar">Voltar ao Painel</a>
         <a href="{{ url_for('logout') }}" class="header-btn btn-sair">Sair</a>
     </div>
-    
+
     <div class="main-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-message-container">
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
         <div class="header-container">
             <h1>Gerenciar Usuários</h1>
             <a href="{{ url_for('adicionar_usuario') }}" class="header-btn btn-adicionar">+ Adicionar Usuário</a>
         </div>
-        
+
         <div class="filtros-container">
             <button class="filtro-btn active" data-filtro="membros">Membros</button>
             <button class="filtro-btn" data-filtro="admins">Administradores</button>
             <button class="filtro-btn" data-filtro="todos">Todos</button>
         </div>
-        
+
         <div id="usuarios-lista" class="usuarios-lista mostrar-membros">
             {% for usuario in usuarios %}
             <div class="usuario-card {% if usuario.is_admin %}admin{% else %}membro{% endif %}" id="user-{{ usuario.id_usuario }}">
@@ -222,6 +262,19 @@ function excluirUsuario(userId) {
         }
     });
 }
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const flashMessages = document.querySelectorAll('.flash-message');
+        flashMessages.forEach(function(msg) {
+            setTimeout(function() {
+                msg.style.opacity = '0';
+                setTimeout(function() {
+                    msg.remove();
+                }, parseFloat(getComputedStyle(msg).transitionDuration) * 1000);
+            }, 3000);
+        });
+    });
 </script>
 </body>
 </html>

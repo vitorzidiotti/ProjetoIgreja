@@ -11,6 +11,7 @@
     <style>
         :root {
             --primary-color: #4A90E2;
+            --success-color: #2ecc71;
             --danger-color: #E74C3C;
             --text-color: #333;
             --light-text-color: #777;
@@ -39,17 +40,23 @@
         }
 
         .button-sair {
-            padding: 10px 20px;
+            padding: 12px 28px;
             border-radius: 8px;
             text-decoration: none;
             color: #fff;
             background-color: var(--danger-color);
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 1rem;
             border: none;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
-        .button-sair:hover { background-color: #c0392b; }
+        .button-sair:hover { 
+            background-color: #c0392b;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
 
         .main-container {
             width: 100%;
@@ -103,6 +110,25 @@
             color: var(--light-text-color);
             line-height: 1.5;
         }
+        
+        .flash-message-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 90%;
+            max-width: 500px;
+        }
+        .flash-message {
+            padding: 1rem;
+            border-radius: 8px;
+            color: #fff;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .flash-message.sucesso { background-color: var(--success-color); }
+        .flash-message.erro { background-color: var(--danger-color); }
 
     </style>
 </head>
@@ -115,8 +141,8 @@
 
     <div class="main-container">
         <div class="welcome-header">
-            <h1>Painel Administrativo</h1>
-            <p>Bem-vindo(a), {{ session.get('nome_usuario') }}! Selecione uma opção para começar.</p>
+            <h1>Olá {{ session.get('nome_usuario', 'Usuário') }}!</h1>
+            <p>O que você gostaria de fazer hoje?</p>
         </div>
 
         <div class="action-grid">
@@ -131,5 +157,18 @@
         </div>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const flashMessages = document.querySelectorAll('.flash-message');
+            flashMessages.forEach(function(msg) {
+                setTimeout(function() {
+                    msg.style.opacity = '0';
+                    setTimeout(function() {
+                        msg.remove();
+                    }, 500);
+                }, 3000);
+            });
+        });
+    </script>
 </body>
 </html>
