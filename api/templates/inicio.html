@@ -25,24 +25,23 @@
         .button-sair:hover { background-color: #c0392b; box-shadow: 0 6px 20px rgba(0,0,0,0.15); transform: translateY(-2px); }
         .welcome-header h1 { font-size: 2.8rem; font-weight: 700; margin-bottom: 0.5rem; }
         .welcome-header p { font-size: 1.2rem; color: var(--light-text-color); margin-bottom: 3rem; }
-        .action-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 4rem; /* Espaço para a nova seção */ }
+        .action-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 4rem; }
         .action-card { background-color: var(--card-bg-color); border-radius: 12px; padding: 2rem; text-decoration: none; color: var(--text-color); box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: all 0.3s ease; border: 1px solid var(--border-color); }
         .action-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); color: var(--primary-color); }
         .action-card h2 { font-size: 1.5rem; margin-top: 0; margin-bottom: 0.5rem; }
         .action-card p { color: var(--light-text-color); line-height: 1.5; }
-        .flash-message-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1000; width: 100%; max-width: 500px; }
-        .flash-message { padding: 1rem; border-radius: 8px; color: #fff; margin-bottom: 1rem; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .flash-message.sucesso { background-color: var(--success-color); }
-        .flash-message.erro { background-color: var(--danger-color); }
-
         .today-events-section { text-align: left; }
         .today-events-section h2 { text-align: center; margin-bottom: 2rem; }
-        .event-today-card { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg-color); padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .event-today-card { display: flex; justify-content: space-between; align-items: center; background: var(--card-bg-color); padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 1rem; }
         .event-today-card h3 { margin: 0; font-size: 1.2rem; }
         .event-today-card p { margin: 5px 0 0; color: var(--light-text-color); }
         .btn-confirmar { background-color: var(--primary-color); color: white; padding: 10px 20px; border-radius: 8px; cursor: pointer; border: none; font-weight: 600; }
         .btn-confirmar:disabled { background-color: #bdc3c7; cursor: not-allowed; }
+        /* Adicionei margem para o mixin do SweetAlert */
+        .btn.mx-2 { margin: 0 5px; } 
     </style>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -83,78 +82,108 @@
         {% endif %}
     </div>
 
+    <script src="alertas.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.btn-confirmar').forEach(button => {
                 button.addEventListener('click', function() {
                     const thisButton = this;
                     const eventId = this.dataset.eventId;
-                    
-                    thisButton.textContent = 'Verificando...';
-                    thisButton.disabled = true;
 
-                    if (!navigator.geolocation) {
-                        alert('Geolocalização não é suportada pelo seu navegador.');
-                        thisButton.textContent = 'Confirmar Presença';
-                        thisButton.disabled = false;
-                        return;
-                    }
-
-                    navigator.geolocation.getCurrentPosition(
-                        (position) => {
-                            const lat = position.coords.latitude;
-                            const lon = position.coords.longitude;
-
-                            fetch("{{ url_for('confirmar_presenca') }}", {
-                                method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({
-                                    event_id: eventId,
-                                    lat: lat,
-                                    lon: lon
-                                })
-                            })
-                            .then(response => response.json())
-                            .then(data => {
-                                alert(data.message);
-                                if (data.status === 'sucesso') {
-                                    thisButton.closest('.event-today-card').remove();
-                                } else {
-                                    thisButton.textContent = 'Tentar Novamente';
-                                    thisButton.disabled = false;
-                                }
-                            })
-                            .catch(err => {
-                                console.error('Erro na requisição:', err);
-                                alert('Ocorreu um erro de comunicação.');
-                                thisButton.textContent = 'Tentar Novamente';
-                                thisButton.disabled = false;
-                            });
-                        },
-                        (error) => {
-                            let errorMessage = 'Não foi possível obter sua localização. ';
-                            switch(error.code) {
-                                case error.PERMISSION_DENIED:
-                                    errorMessage += "Você negou a permissão de acesso à localização.";
-                                    break;
-                                case error.POSITION_UNAVAILABLE:
-                                    errorMessage += "As informações de localização não estão disponíveis.";
-                                    break;
-                                case error.TIMEOUT:
-                                    errorMessage += "A requisição para obter a localização expirou.";
-                                    break;
-                                default:
-                                    errorMessage += "Ocorreu um erro desconhecido.";
-                                    break;
-                            }
-                            alert(errorMessage);
-                            thisButton.textContent = 'Confirmar Presença';
-                            thisButton.disabled = false;
+                    // PASSO A: Pergunta ao usuário se ele realmente quer confirmar
+                    exibirAlertaConfirmacao(
+                        'Confirmar Presença?',
+                        'Para confirmar, precisaremos acessar sua localização. Você concorda?',
+                        'Sim, confirmar!',
+                        () => {
+                            // PASSO B: Se o usuário concordar, a lógica de geolocalização começa aqui
+                            iniciarConfirmacao(thisButton, eventId);
                         }
                     );
                 });
             });
         });
+
+        function iniciarConfirmacao(thisButton, eventId) {
+            thisButton.textContent = 'Verificando...';
+            thisButton.disabled = true;
+
+            if (!navigator.geolocation) {
+                // Usa a nova função de alerta para erro
+                exibirAlertaErro('Geolocalização Indisponível', 'Seu navegador não suporta geolocalização.')
+                    .then(() => {
+                        thisButton.textContent = 'Confirmar Presença';
+                        thisButton.disabled = false;
+                    });
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    // Sucesso ao obter localização, agora envia para o servidor
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+
+                    fetch("{{ url_for('confirmar_presenca') }}", {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ event_id: eventId, lat: lat, lon: lon })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'sucesso') {
+                            // Usa o alerta de sucesso
+                            exibirAlertaSucesso('Presença Confirmada!', data.message)
+                                .then(() => {
+                                    // Remove o card do evento da tela após o sucesso
+                                    thisButton.closest('.event-today-card').remove();
+                                });
+                        } else {
+                            // Usa o alerta de erro com a mensagem do servidor
+                            exibirAlertaErro('Falha na Confirmação', data.message)
+                                .then(() => {
+                                    thisButton.textContent = 'Tentar Novamente';
+                                    thisButton.disabled = false;
+                                });
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Erro na requisição:', err);
+                        // Usa o alerta de erro para falhas de comunicação
+                        exibirAlertaErro('Erro de Rede', 'Ocorreu um erro de comunicação com o servidor.')
+                            .then(() => {
+                                thisButton.textContent = 'Tentar Novamente';
+                                thisButton.disabled = false;
+                            });
+                    });
+                },
+                (error) => {
+                    // Trata erros específicos de geolocalização
+                    let errorMessage = 'Não foi possível obter sua localização. ';
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            errorMessage = "Você negou a permissão de acesso à localização. Habilite nas configurações do seu navegador para continuar.";
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            errorMessage = "As informações de localização não estão disponíveis no momento.";
+                            break;
+                        case error.TIMEOUT:
+                            errorMessage = "A requisição para obter a localização expirou.";
+                            break;
+                        default:
+                            errorMessage = "Ocorreu um erro desconhecido ao tentar obter a localização.";
+                            break;
+                    }
+                    // Usa o alerta de erro para falhas de geolocalização
+                    exibirAlertaErro('Erro de Localização', errorMessage)
+                        .then(() => {
+                            thisButton.textContent = 'Confirmar Presença';
+                            thisButton.disabled = false;
+                        });
+                }
+            );
+        }
     </script>
 </body>
 </html>
