@@ -182,15 +182,6 @@
     </div>
 
     <div class="main-container">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-message-container">
-                    {% for category, message in messages %}
-                        <div class="flash-message {{ category }}">{{ message }}</div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
         <div class="header-container">
             <h1>Gerenciar Usuários</h1>
             <a href="{{ url_for('adicionar_usuario') }}" class="header-btn btn-adicionar">+ Adicionar Usuário</a>
